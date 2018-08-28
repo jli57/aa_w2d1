@@ -51,7 +51,7 @@ class Board
   def build_pawns(color, row_idx)
     @rows[row_idx].each_index do |col_idx|
       pos = [row_idx, col_idx]
-      self[pos] = Pawn.new(color, @rows, pos)
+      self[pos] = Pawn.new(color, self, pos)
     end
   end
 
@@ -60,15 +60,15 @@ class Board
       pos = [row_idx, col_idx]
       case col_idx
       when 0, 7
-        self[pos] = Rook.new(color, @rows, pos)
+        self[pos] = Rook.new(color, self, pos)
       when 1, 6
-        self[pos] = Knight.new(color, @rows, pos)
+        self[pos] = Knight.new(color, self, pos)
       when 2, 5
-        self[pos] = Bishop.new(color, @rows, pos)
+        self[pos] = Bishop.new(color, self, pos)
       when 3
-        self[pos] = Queen.new(color, @rows, pos)
+        self[pos] = Queen.new(color, self, pos)
       when 4
-        self[pos] = King.new(color, @rows, pos)
+        self[pos] = King.new(color, self, pos)
       end
     end
   end
