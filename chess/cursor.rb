@@ -76,8 +76,21 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+    when :up || :down || :left || :right
+      update_pos(key)
+    when :space || :return
+      @cursor_pos
+    when :ctrl_c
+      Process.exit(0)
+    end
   end
 
   def update_pos(diff)
+    new_pos = @cursor_pos.map.with_index do |coord, idx|
+      coord + diff[idx]
+    end
+    @cursor_pos = new_pos if @board.valid_pos?(new_pos)
+    # Error handling TBD
   end
 end
