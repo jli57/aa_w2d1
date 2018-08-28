@@ -3,8 +3,10 @@ require "singleton"
 
 class Piece
 
-  def initialize(color)
+  def initialize(color, board, pos)
     @color = color
+    @board = board
+    @pos = pos
   end
 
   def to_s
@@ -15,11 +17,16 @@ class Piece
     :piece
   end
 
+  def moves
+
+  end
+
 end
 
 class NullPiece < Piece
   include Singleton
   def initialize
+
   end
 
   def moves
@@ -80,5 +87,13 @@ class Pawn < Piece
   def to_s
     "♟".colorize(@color)
   end
+
+end
+
+module Slideable
+
+end
+
+module Stepable
 
 end

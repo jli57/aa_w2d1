@@ -49,10 +49,28 @@ class Board
   private
 
   def build_pawns(color, row_idx)
-    @rows[row_idx].each {|piece| piece = Pawn.new(color)}
+    @rows[row_idx].each_index do |col_idx|
+      pos = [row_idx, col_idx]
+      self[pos] = Pawn.new(color, @rows, pos)
+    end
   end
 
   def build_complex(color, row_idx)
+    @rows[row_idx].each_index do |col_idx|
+      pos = [row_idx, col_idx]
+      case col_idx
+      when 0, 7
+        self[pos] = Rook.new(color, @rows, pos)
+      when 1, 6
+        self[pos] = Knight.new(color, @rows, pos)
+      when 2, 5
+        self[pos] = Bishop.new(color, @rows, pos)
+      when 3
+        self[pos] = Queen.new(color, @rows, pos)
+      when 4
+        self[pos] = King.new(color, @rows, pos)
+      end
+    end
   end
 
 
