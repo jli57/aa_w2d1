@@ -39,14 +39,14 @@ class Display
 
 end
 
-if __FILE__ == $PROGRAM_NAME
-
-  b = Board.new
-  d = Display.new(b)
-
-  while true
-    d.render
-    d.cursor.get_input
-  end
-
-end
+# if __FILE__ == $PROGRAM_NAME
+#
+#   b = Board.new
+#   d = Display.new(b)
+#
+#   while true
+#     d.render
+#     d.cursor.get_input
+#   end
+#
+# end

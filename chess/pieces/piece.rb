@@ -110,16 +110,20 @@ end
 module SteppingPiece
 
   def moves
-
+    result = []
+    move_diffs.each do |diff|
+      new_pos = @pos.map.with_index { |coord, idx| coord + diff[idx] }
+      unless @board.valid_pos?(new_pos) == false || @board[new_pos].color == self.color
+        result << new_pos
+      end
+    end
+    result
   end
 
   private
 
-  HORIZONTAL_DIRS = [[-1, 0], [1, 0], [0, -1], [0, 1]]
-  DIAGONAL_DIRS = [[-1, -1], [-1, 1], [1, 1],[1, -1]]
-
   def move_diffs
-
+    [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, 1],[1, -1]]
   end
 end
 
@@ -134,6 +138,9 @@ class King < Piece
     "♚".colorize(@color)
   end
 
+  def move_diffs
+    [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, 1],[1, -1]]
+  end
 end
 
 class Queen < Piece
@@ -154,6 +161,7 @@ class Queen < Piece
 end
 
 class Rook < Piece
+  include SlidingPiece
 
   def symbol
     :rook
@@ -170,6 +178,7 @@ class Rook < Piece
 end
 
 class Bishop < Piece
+  include SlidingPiece
 
   def symbol
     :bishop
@@ -186,6 +195,7 @@ class Bishop < Piece
 end
 
 class Knight < Piece
+  include SteppingPiece
 
   def symbol
     :knight
@@ -193,6 +203,10 @@ class Knight < Piece
 
   def to_s
     "♞".colorize(@color)
+  end
+
+  def move_diffs
+    [[1,2], [2,1], [1,-2], [-2,1], [-1,2], [2, -1], [-1,-2], [-2,-1]]
   end
 
 end
