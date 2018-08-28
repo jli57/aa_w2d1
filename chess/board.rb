@@ -31,14 +31,18 @@ class Board
     @rows[x][y] = val
   end
 
-  def move_piece(start_pos, end_pos)
+  def move_piece!(start_pos, end_pos)
     unless valid_pos?(start_pos)
       raise MovementError.new "Not a valid start position"; end
     unless valid_pos?(end_pos)
       raise MovementError.new "Not a valid end position"; end
-    unless self[start_pos].is_a?(NullPiece)
+    if self[start_pos].is_a?(NullPiece)
       raise MovementError.new "No piece to move at start position"; end
+
     self[end_pos], self[start_pos] = self[start_pos], self[end_pos]
+
+    self[start_pos].pos = start_pos
+    self[end_pos].pos = end_pos
   end
 
   def valid_pos?(pos)
