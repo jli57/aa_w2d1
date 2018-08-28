@@ -217,8 +217,57 @@ class Pawn < Piece
     :pawn
   end
 
+  def move_dirs
+    if self.color == :white
+      [[-1, 0], [-1,-1], [-1, 1]]
+    else
+      [[1, 0], [1, -1], [1, 1]]
+    end
+  end
+
+  def moves
+    side_attacks + forward_steps
+  end
+
   def to_s
     "♟".colorize(@color)
+  end
+
+  private
+  def forward_dir
+    return 1 if self.color == :black
+    -1
+  end
+
+  def side_attacks
+    other_color = self.color == :white ? :black : :white
+    result = []
+    left = [@pos[0] + forward_dir, @pos[1] - 1]
+    right = [@pos[0] + forward_dir, @pos[1] + 1]
+    if @board.valid_pos?(left) && @board[left].color == other_color
+      result << left
+    elsif @board.valid_pos?(right) && @board[right].color == other_color
+      result << right
+    end
+    result
+
+  end
+
+  def forward_steps
+    result = []
+    new_pos = [@pos[0] + forward_dir, @pos[1]]
+    result << new_pos if @board[new_pos].empty?
+    new_pos = [@pos[0] + (forward_dir * 2), @pos[1]]
+    if @board[new_pos].empty? && result.length == 1 && at_start_row?
+      result << new_pos
+    end 
+    result
+  end
+
+  def at_start_row?
+    return true if self.pos[0] == 6 && self.color == :white
+    return true if self.pos[0] == 1 && self.color == :black
+    false
   end
 
 end
