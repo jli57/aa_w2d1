@@ -164,7 +164,7 @@ class Rook < Piece
   end
 
   def move_dirs
-
+    horizontal_dirs
   end
 
 end
@@ -180,7 +180,7 @@ class Bishop < Piece
   end
 
   def move_dirs
-
+    diagonal_dirs
   end
 
 end
