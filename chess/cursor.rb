@@ -76,9 +76,16 @@ class Cursor
   end
 
   def handle_key(key)
+    key_direction = MOVES[key]
     case key
-    when :up || :down || :left || :right
-      update_pos(key)
+    when :up
+      update_pos(key_direction)
+    when :down
+      update_pos(key_direction)
+    when :left
+      update_pos(key_direction)
+    when :right
+      update_pos(key_direction)
     when :space || :return
       @cursor_pos
     when :ctrl_c
@@ -91,6 +98,7 @@ class Cursor
       coord + diff[idx]
     end
     @cursor_pos = new_pos if @board.valid_pos?(new_pos)
+
     # Error handling TBD
   end
 end
