@@ -17,7 +17,11 @@ class Display
       row.each_with_index do |square, j|
         string = square.to_s
         if [i, j] == @cursor.cursor_pos
-          string = " #{string} ".on_red
+          if @cursor.selected
+            string = " #{string} ".on_green
+          else
+            string = " #{string} ".on_red
+          end
         else
           if (i+j) % 2 == 0
             string = " #{string} ".on_light_black

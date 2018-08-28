@@ -1,9 +1,10 @@
 require "colorize"
+require "singleton"
 
 class Piece
 
-  def initialize
-    @color = :white
+  def initialize(color)
+    @color = color
   end
 
   def to_s
@@ -17,7 +18,9 @@ class Piece
 end
 
 class NullPiece < Piece
-
+  include Singleton
+  def initialize
+  end
 
   def moves
 

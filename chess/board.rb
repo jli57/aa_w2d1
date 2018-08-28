@@ -5,11 +5,18 @@ class MovementError < StandardError; end
 class Board
   attr_reader :rows
   def initialize
-    @rows = Array.new(8) { Array.new(8, NullPiece.new) }
+    @rows = Array.new(8) { Array.new(8, NullPiece.instance) }
     @rows.each_with_index  do |row, i|
-      next unless [0, 1, 6, 7].include?(i)
-      row.each_index do |j|
-        @rows[i][j] = Piece.new
+      # next if [2, 3, 4, 5].include?(i)
+      case i
+      when 0
+        build_complex(:black, i)
+      when 1
+        build_pawns(:black, i)
+      when 6
+        build_pawns(:white, i)
+      when 7
+        build_complex(:white, i)
       end
     end
   end
@@ -38,4 +45,15 @@ class Board
     pos.each {|idx| return false unless (0..7).include?(idx)}
     true
   end
+
+  private
+
+  def build_pawns(color, row_idx)
+    @rows[row_idx].each {|piece| piece = Pawn.new(color)}
+  end
+
+  def build_complex(color, row_idx)
+  end
+
+
 end
