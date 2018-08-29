@@ -19,7 +19,7 @@ class Piece
   end
 
   def valid_moves
-    #return array of valid moves
+    self.moves
   end
 
   def empty?
@@ -34,6 +34,11 @@ class Piece
 
   def move_into_check?(end_pos)
 
+  end
+
+  def other_color
+    return :black if self.color == :white
+    return :white if self.color == :black
   end
 
 end
@@ -97,6 +102,9 @@ module SlidingPiece
     until stop
       new_pos = new_pos.map.with_index { |coord, idx| coord + diff[idx] }
       if @board.valid_pos?(new_pos) == false || @board[new_pos].color == self.color
+        stop = true
+      elsif @board[new_pos].color == other_color
+        result << new_pos 
         stop = true
       else
         result << new_pos
@@ -260,7 +268,7 @@ class Pawn < Piece
     new_pos = [@pos[0] + (forward_dir * 2), @pos[1]]
     if @board[new_pos].empty? && result.length == 1 && at_start_row?
       result << new_pos
-    end 
+    end
     result
   end
 

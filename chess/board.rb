@@ -39,10 +39,13 @@ class Board
     if self[start_pos].is_a?(NullPiece)
       raise MovementError.new "No piece to move at start position"; end
 
-    self[end_pos], self[start_pos] = self[start_pos], self[end_pos]
+    if self[start_pos].valid_moves.include?(end_pos)
+      self[end_pos] = self[start_pos]
+      self[start_pos] = NullPiece.instance
 
-    self[start_pos].pos = start_pos
-    self[end_pos].pos = end_pos
+      self[start_pos].pos = start_pos
+      self[end_pos].pos = end_pos
+    end
   end
 
   def valid_pos?(pos)

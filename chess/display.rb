@@ -39,14 +39,18 @@ class Display
 
 end
 
-# if __FILE__ == $PROGRAM_NAME
-#
-#   b = Board.new
-#   d = Display.new(b)
-#
-#   while true
-#     d.render
-#     d.cursor.get_input
-#   end
-#
-# end
+if __FILE__ == $PROGRAM_NAME
+
+  b = Board.new
+  d = Display.new(b)
+
+  while true
+    d.render
+    previous = d.cursor.selected
+    d.cursor.get_input
+    if previous && d.cursor.selected == false
+      b.move_piece!(d.cursor.selected_pos, d.cursor.cursor_pos)
+    end
+  end
+
+end
